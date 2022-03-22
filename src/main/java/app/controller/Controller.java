@@ -130,4 +130,12 @@ public class Controller {
 
         return games;
     }
+
+
+    public static ArrayList<String> findThe5BestOpenings() {
+        File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
+        ArrayList<File> hashtablePaths = findHashtablesByName(gamesDataDirectory, Constants.MOST_PLAYED_OPENING_GAMES); // list of the path of all hashtables
+
+        return null;
+    }
 }
