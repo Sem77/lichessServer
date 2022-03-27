@@ -1,6 +1,8 @@
 package app.controller;
 
 public class Constants {
+    public final static int NB_THREAD_MAX = 4;
+
     public final static int VIEW_A_GAME = 1;
     public final static int VIEW_A_PLAYER_S_GAMES = 2;
 

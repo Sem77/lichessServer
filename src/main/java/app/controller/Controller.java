@@ -4,6 +4,7 @@ import app.model.Game;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class Controller {
@@ -135,6 +136,35 @@ public class Controller {
     public static ArrayList<String> findThe5BestOpenings() {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
         ArrayList<File> hashtablePaths = findHashtablesByName(gamesDataDirectory, Constants.MOST_PLAYED_OPENING_GAMES); // list of the path of all hashtables
+
+        Hashtable<String, Integer> h1 = new Hashtable<>();
+        h1.put("a", 1);
+        h1.put("b", 1);
+        h1.put("c", 1);
+        h1.put("d", 1);
+
+        Hashtable<String, Integer> h2 = new Hashtable<>();
+        h1.put("a", 1);
+        h1.put("b", 3);
+        h1.put("c", 1);
+        h1.put("d", 5);
+
+        for (Enumeration<String> e = h2.keys(); e.hasMoreElements();) {
+            String key = e.nextElement();
+            System.out.println(key);
+            Integer n = h1.get(key);
+            if(n != null)
+                h1.put(key, h2.get(key) + n);
+            h1.put(key, h2.get(key));
+        }
+
+
+		/*h2.forEach(
+			(key, value) -> h1.merge(key, value, (v1, v2) -> v1+v2)
+		);*/
+
+        System.out.println(h1);
+        System.out.println(h2);
 
         return null;
     }
