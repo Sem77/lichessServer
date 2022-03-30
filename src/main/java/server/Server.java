@@ -8,11 +8,9 @@ public class Server {
     private int port;
     private ServerSocket serverSocket;
     private boolean run = true;
-    public int nbThreadsWorking;
 
     public Server(int port) throws IOException {
         this.port = port;
-        nbThreadsWorking = 0;
         serverSocket = new ServerSocket(port);
     }
 
@@ -27,10 +25,5 @@ public class Server {
 
     public void stopServer() {
         run = false;
-    }
-
-
-    public synchronized void takeToken() {
-
     }
 }

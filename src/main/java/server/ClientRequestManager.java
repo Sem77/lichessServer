@@ -1,6 +1,5 @@
 package server;
 
-import app.controller.Constants;
 import app.controller.Controller;
 import app.model.Game;
 import app.model.Request;
@@ -8,7 +7,6 @@ import app.model.Request;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class ClientRequestManager extends Thread {
     private Socket connectionSocket;
@@ -33,6 +31,17 @@ public class ClientRequestManager extends Thread {
                 outStream.writeObject(games);
             }
             else if(choice == Request.VIEW_THE_5_MOST_PLAYED_OPENING) {
+                ArrayList<String> openings = Controller.findThe5MostPlayedOpening();
+                outStream.writeObject(openings);
+            }
+            else if(choice == Request.VIEW_THE_SHORTEST_GAMES) {
+                ArrayList<Game> games = Controller.findShortestGames();
+                outStream.writeObject(games);
+            }
+            else if(choice == Request.VIEW_THE_MOST_ACTIVE_PLAYERS) {
+
+            }
+            else if(choice == Request.VIEW_THE_BEST_PLAYERS) {
 
             }
             inStream.close();

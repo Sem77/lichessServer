@@ -7,9 +7,19 @@ public class Constants {
     public final static int VIEW_A_PLAYER_S_GAMES = 2;
 
     public static final String A_PLAYER_GAME = "a_player_game_hastable";
+    public static final String A_PLAYER_GAME_OVER_A_YEAR = "a_player_game_over_a_year_hastable";
+    public static final String A_PLAYER_GAME_ALL = "a_player_game_all_hastable";
+
     public static final String SHORTEST_GAMES = "shortest_games_hashtable";
+    public static final String SHORTEST_GAMES_OVER_A_YEAR = "shortest_games_over_a_year_hashtable";
+
     public static final String MOST_PLAYED_OPENING_GAMES = "most_played_opening_games_hashtable";
+    public static final String MOST_PLAYED_OPENING_GAMES_OVER_A_YEAR = "most_played_opening_games_over_a_year_hashtable";
+    public static final String MOST_PLAYED_OPENING_GAMES_ALL = "most_played_opening_games_all_hashtable";
+
     public static final String MOST_ACTIVE_PLAYERS = "most_active_players_hashtable";
+    public static final String MOST_ACTIVE_PLAYERS_OVER_A_YEAR = "most_active_players_over_a_year_hashtable";
+    public static final String MOST_ACTIVE_PLAYERS_ALL = "most_active_players_all_hashtable";
 
     public static final int NUMBER_OF_GAMES_PER_FILE = 20;
     public static final String BINARY_EXTENSION = "dat";
