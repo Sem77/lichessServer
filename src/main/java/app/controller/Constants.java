@@ -18,10 +18,16 @@ public class Constants {
     public static final String MOST_PLAYED_OPENING_GAMES = "most_played_opening_games_hashtable";
     public static final String MOST_PLAYED_OPENING_GAMES_OVER_A_YEAR = "most_played_opening_games_over_a_year_hashtable";
     public static final String MOST_PLAYED_OPENING_GAMES_ALL = "most_played_opening_games_all_hashtable";
+    public static final String ORDER_MOST_PLAYED_OPENING_GAMES_ALL = "most_played_opening_games_in_order_all";
+    public static final String ORDER_MOST_PLAYED_OPENING_GAMES_OVER_A_YEAR = "most_played_opening_games_in_order_over_a_year";
+    public static final String ORDER_MOST_PLAYED_OPENING_GAMES_OVER_A_MONTH = "most_played_opening_games_in_order_over_a_month";
 
     public static final String MOST_ACTIVE_PLAYERS = "most_active_players_hashtable";
     public static final String MOST_ACTIVE_PLAYERS_OVER_A_YEAR = "most_active_players_over_a_year_hashtable";
     public static final String MOST_ACTIVE_PLAYERS_ALL = "most_active_players_all_hashtable";
+    public static final String ORDER_MOST_ACTIVE_PLAYERS_ALL = "most_active_players_in_order_all";
+    public static final String ORDER_MOST_ACTIVE_PLAYERS_OVER_A_YEAR = "most_active_players_in_order_over_a_year";
+    public static final String ORDER_MOST_ACTIVE_PLAYERS_OVER_A_MONTH = "most_active_players_in_order_over_a_month";
 
     public static final int NUMBER_OF_GAMES_PER_FILE = 20;
     public static final String BINARY_EXTENSION = "dat";

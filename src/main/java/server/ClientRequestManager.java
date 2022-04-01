@@ -39,7 +39,8 @@ public class ClientRequestManager extends Thread {
                 outStream.writeObject(games);
             }
             else if(choice == Request.VIEW_THE_MOST_ACTIVE_PLAYERS) {
-
+                ArrayList<String> players = Controller.findTheNMostActivePlayers(Integer.parseInt(criteria.get(0)));
+                outStream.writeObject(players);
             }
             else if(choice == Request.VIEW_THE_BEST_PLAYERS) {
 

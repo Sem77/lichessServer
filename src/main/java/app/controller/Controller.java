@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.model.Game;
+import app.model.OccurrenceString;
 
 import java.io.*;
 import java.util.*;
@@ -147,23 +148,46 @@ public class Controller {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
         ArrayList<String> openings = new ArrayList<>();
         try {
-            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.MOST_PLAYED_OPENING_GAMES_ALL + "." + Constants.BINARY_EXTENSION));
-            Hashtable<String, Integer> hashtable = (Hashtable<String, Integer>) o.readObject();
-            Set<String> keys = hashtable.keySet();
-            for (String key : keys) {
-                String s = key + ": " + hashtable.get(key);
-                openings.add(s);
+            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.ORDER_MOST_PLAYED_OPENING_GAMES_ALL + "." + Constants.BINARY_EXTENSION));
+            OccurrenceString os;
+            try {
+                do {
+                    os = (OccurrenceString) o.readObject();
+                    openings.add(os.toString());
+                } while (os != null && openings.size() < 5);
+            } catch(EOFException eofe) {}
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
+            o.close();
+
         } catch(FileNotFoundException fnfe) {
             System.out.println("Hashtable not found");
-        } catch(IOException ioe) {
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch(IOException ioe) {}
         return openings;
     }
 
 
+    public static ArrayList<String> findTheNMostActivePlayers(Integer nbPlayers) {
+        File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
+        ArrayList<String> players = new ArrayList<>();
+        try {
+            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.ORDER_MOST_ACTIVE_PLAYERS_ALL + "." + Constants.BINARY_EXTENSION));
+            OccurrenceString os;
+            try {
+                do {
+                    os = (OccurrenceString) o.readObject();
+                    players.add(os.toString());
+                } while (os != null && players.size() < nbPlayers);
+            } catch(EOFException eofe) {}
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            o.close();
 
+        } catch(FileNotFoundException fnfe) {
+            System.out.println("Hashtable not found");
+        } catch(IOException ioe) {}
+        return players;
+    }
 }
