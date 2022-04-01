@@ -42,10 +42,10 @@ public class Controller {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private static ArrayList<String> gameFilesOfAPlayer(File hashtablePath, String username) throws IOException, ClassNotFoundException {
+    private static TreeSet<String> gameFilesOfAPlayer(File hashtablePath, String username) throws IOException, ClassNotFoundException {
         ObjectInputStream o = new ObjectInputStream(new FileInputStream(hashtablePath));
-        Hashtable<String, ArrayList<String>> hashtable = (Hashtable<String, ArrayList<String>>) o.readObject(); // loading the hashtable
-        ArrayList<String> gameFiles = hashtable.get(username);
+        Hashtable<String, TreeSet<String>> hashtable = (Hashtable<String, TreeSet<String>>) o.readObject(); // loading the hashtable
+        TreeSet<String> gameFiles = hashtable.get(username);
 
         o.close();
 
@@ -61,7 +61,7 @@ public class Controller {
      * @param username
      * @return a list games from gamesFiles that the player played
      */
-    private static ArrayList<Game> gamesOfAPlayer(ArrayList<String> gameFiles, String username) {
+    private static ArrayList<Game> gamesOfAPlayer(TreeSet<String> gameFiles, String username) {
         ArrayList<Game> games = new ArrayList<>();
 
         for(String gameFilePath : gameFiles) {
@@ -92,12 +92,12 @@ public class Controller {
     public static ArrayList<Game> findAPlayerSGames(String username) {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
         ArrayList<File> hashtablePaths = findHashtablesByName(gamesDataDirectory, Constants.A_PLAYER_GAME_OVER_A_YEAR); // list of the path of all hashtables
-        ArrayList<String> gameFilesPaths = new ArrayList<>(); //
+        TreeSet<String> gameFilesPaths = new TreeSet<>(); //
 
         for(File hashtablePath : hashtablePaths) {
             if(hashtablePath != null) {
                 try {
-                    ArrayList<String> s = gameFilesOfAPlayer(hashtablePath, username);
+                    TreeSet<String> s = gameFilesOfAPlayer(hashtablePath, username);
                     if(s != null) {
                         gameFilesPaths.addAll(s);
                     }
@@ -118,53 +118,27 @@ public class Controller {
 
 
 
-    private static ArrayList<Game> gamesWithNStrokes(File hashtablePath, int nStrokes) throws IOException, ClassNotFoundException {
-        ObjectInputStream o = new ObjectInputStream(new FileInputStream(hashtablePath));
-
-        Hashtable<Integer, ArrayList<String>> hashtable = (Hashtable<Integer, ArrayList<String>>) o.readObject();
-        o.close();
-
-        ArrayList<Game> games = new ArrayList<>();
-        ArrayList<String> gameFiles = hashtable.get(nStrokes);
-        if(gameFiles != null) {
-            for (String gameFile : gameFiles) {
-                ObjectInputStream a = new ObjectInputStream(new FileInputStream(gameFile));
-                Game game;
-                try {
-                    do {
-                        game = (Game) a.readObject();
-                        if (game.getStrokesNumber() == nStrokes) {
-                            games.add(game);
-                        }
-                    } while (game != null);
-                } catch(EOFException eofe) {}
-
-                a.close();
-            }
-        }
-        return games;
-    }
-
-    private static ArrayList<Game> shortestGames(ArrayList<File> hashtablesPaths) throws IOException {
-        ArrayList<Game> shortest = new ArrayList<>();
-        for(int i=0; (i < 50) && (shortest.size() < 5); i++) {
-            for(File hashtablePath : hashtablesPaths) {
-                try {
-                    ArrayList<Game> g = gamesWithNStrokes(hashtablePath, i);
-                    for (int j = 0; (j < 5 - shortest.size()) && (j < g.size()); j++) {
-                        shortest.add(g.get(j));
-                    }
-                } catch(ClassNotFoundException cnfe) {System.out.println("Class not found");}
-            }
-        }
-        return shortest;
-    }
-
     public static ArrayList<Game> findShortestGames() throws IOException {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
-        ArrayList<File> hashtablePaths = findHashtablesByName(gamesDataDirectory, Constants.SHORTEST_GAMES_OVER_A_YEAR); // list of the path of all hashtables
+        File shortestGamesPath = new File(gamesDataDirectory + File.separator + Constants.FIVE_SHORTEST_GAMES + "." + Constants.BINARY_EXTENSION); // list of the path of all hashtables
 
-        return shortestGames(hashtablePaths);
+        ArrayList<Game> games = new ArrayList<>();
+
+        ObjectInputStream o = new ObjectInputStream(new FileInputStream(shortestGamesPath));
+
+        Game game;
+        try {
+            do {
+                game = (Game) o.readObject();
+                games.add(game);
+            } while (game != null);
+        } catch(EOFException eofe) {}
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        o.close();
+
+        return games;
     }
 
 
