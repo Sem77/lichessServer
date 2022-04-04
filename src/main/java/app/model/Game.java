@@ -33,8 +33,8 @@ public class Game implements Serializable {
                 String opening, String timeControl, String termination, String strokes) throws  ParseException {
         this.event = event;
         this.site = site;
-        this.white = new Player(white);
-        this.black = new Player(black);
+        this.white = new Player(white.trim());
+        this.black = new Player(black.trim());
 
         // Assign the result
         if(result.equalsIgnoreCase("1-0"))
@@ -126,6 +126,22 @@ public class Game implements Serializable {
 
     public Strokes getStrokes() {
         return strokes;
+    }
+
+    public Player getWinner() {
+        if(result == WHITE_WINNER)
+            return white;
+        else if(result == BLACK_WINNER)
+            return black;
+        return null;
+    }
+
+    public Player getLoser() {
+        if(result == WHITE_WINNER)
+            return black;
+        else if(result == BLACK_WINNER)
+            return white;
+        return null;
     }
 
 

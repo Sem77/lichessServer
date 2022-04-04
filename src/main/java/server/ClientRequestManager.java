@@ -2,6 +2,7 @@ package server;
 
 import app.controller.Controller;
 import app.model.Game;
+import app.model.Player;
 import app.model.Request;
 
 import java.io.*;
@@ -43,7 +44,8 @@ public class ClientRequestManager extends Thread {
                 outStream.writeObject(players);
             }
             else if(choice == Request.VIEW_THE_BEST_PLAYERS) {
-
+                ArrayList<Player> players = Controller.findTheNBestPlayers(Integer.parseInt(criteria.get(0)));
+                outStream.writeObject(players);
             }
             inStream.close();
             outStream.close();

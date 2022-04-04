@@ -2,6 +2,7 @@ package app.controller;
 
 import app.model.Game;
 import app.model.OccurrenceString;
+import app.model.Player;
 
 import java.io.*;
 import java.util.*;
@@ -188,6 +189,30 @@ public class Controller {
         } catch(FileNotFoundException fnfe) {
             System.out.println("Hashtable not found");
         } catch(IOException ioe) {}
+        return players;
+    }
+
+
+    public static ArrayList<Player> findTheNBestPlayers(Integer nbPlayers) {
+        File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.ORDER_BEST_PLAYERS_ALL + "." + Constants.BINARY_EXTENSION));
+            Player player;
+            try {
+                do {
+                    player = (Player) o.readObject();
+                    players.add(player);
+                } while (player != null && players.size() < nbPlayers);
+            } catch(EOFException eofe) {}
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            o.close();
+        } catch(FileNotFoundException fnfe) {
+            System.out.println("Hashtable not found");
+        } catch(IOException ioe) {}
+
         return players;
     }
 }
