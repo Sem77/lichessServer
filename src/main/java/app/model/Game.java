@@ -144,6 +144,10 @@ public class Game implements Serializable {
         return null;
     }
 
+    public String getSite() {
+        return site;
+    }
+
 
     public String toString() {
         String gameString = "";

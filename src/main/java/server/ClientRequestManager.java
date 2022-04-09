@@ -4,6 +4,7 @@ import app.controller.Controller;
 import app.model.Game;
 import app.model.Player;
 import app.model.Request;
+import app.model.Strokes;
 
 import java.io.*;
 import java.net.Socket;
@@ -27,7 +28,11 @@ public class ClientRequestManager extends Thread {
             int choice = clientRequest.getRequestNumber();
             ArrayList<String> criteria = clientRequest.getCriterias();
 
-            if(choice == Request.VIEW_A_PLAYER_S_GAMES) {
+            if(choice == Request.VIEW_A_GAME) {
+                Strokes strokes = Controller.findAGameWithLink(criteria.get(0));
+                outStream.writeObject(strokes);
+            }
+            else if(choice == Request.VIEW_A_PLAYER_S_GAMES) {
                 ArrayList<Game> games = Controller.findAPlayerSGames(criteria.get(0));
                 outStream.writeObject(games);
             }

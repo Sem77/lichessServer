@@ -6,6 +6,10 @@ public class Constants {
     public final static int VIEW_A_GAME = 1;
     public final static int VIEW_A_PLAYER_S_GAMES = 2;
 
+    public static final String GAME_LINK = "game_link_hashtable";
+    public static final String GAME_LINK_OVER_A_YEAR = "game_link_over_a_year_hashtable";
+    public static final String GAME_LINK_ALL = "game_link_all_hashtable";
+
     public static final String A_PLAYER_GAME = "a_player_game_hastable";
     public static final String A_PLAYER_GAME_OVER_A_YEAR = "a_player_game_over_a_year_hastable";
     public static final String A_PLAYER_GAME_ALL = "a_player_game_all_hastable";

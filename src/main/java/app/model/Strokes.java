@@ -47,6 +47,12 @@ public class Strokes implements Serializable {
     }
 
 
+    public void showSteps() {
+        System.out.println(whiteStrokes);
+        System.out.println(blackStrokes);
+    }
+
+
     public String toString() {
         String strokes = "";
 
