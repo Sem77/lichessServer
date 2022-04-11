@@ -14,10 +14,10 @@ public class Constants {
     public static final String A_PLAYER_GAME_OVER_A_YEAR = "a_player_game_over_a_year_hastable";
     public static final String A_PLAYER_GAME_ALL = "a_player_game_all_hastable";
 
-    public static final String FIVE_SHORTEST_GAMES = "5 shortest games";
+    public static final String ORDER_SHORTEST_GAMES = "shortest_games_in_order";
     public static final String SHORTEST_GAMES = "shortest_games_hashtable";
     public static final String SHORTEST_GAMES_OVER_A_YEAR = "shortest_games_over_a_year_hashtable";
-    public static final String SHORTEST_GAMES_ALL = "shortest_games_over_all_hashtable";
+    public static final String SHORTEST_GAMES_ALL = "shortest_games_all_hashtable";
 
     public static final String MOST_PLAYED_OPENING_GAMES = "most_played_opening_games_hashtable";
     public static final String MOST_PLAYED_OPENING_GAMES_OVER_A_YEAR = "most_played_opening_games_over_a_year_hashtable";

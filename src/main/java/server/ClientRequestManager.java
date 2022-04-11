@@ -29,11 +29,11 @@ public class ClientRequestManager extends Thread {
             ArrayList<String> criteria = clientRequest.getCriterias();
 
             if(choice == Request.VIEW_A_GAME) {
-                Strokes strokes = Controller.findAGameWithLink(criteria.get(0));
-                outStream.writeObject(strokes);
+                Game games = Controller.findAGameWithLink(criteria.get(0));
+                outStream.writeObject(games);
             }
             else if(choice == Request.VIEW_A_PLAYER_S_GAMES) {
-                ArrayList<Game> games = Controller.findAPlayerSGames(criteria.get(0));
+                ArrayList<String> games = Controller.findAPlayerSGames(criteria.get(0));
                 outStream.writeObject(games);
             }
             else if(choice == Request.VIEW_THE_5_MOST_PLAYED_OPENING) {
@@ -41,8 +41,8 @@ public class ClientRequestManager extends Thread {
                 outStream.writeObject(openings);
             }
             else if(choice == Request.VIEW_THE_SHORTEST_GAMES) {
-                ArrayList<Game> games = Controller.findShortestGames();
-                outStream.writeObject(games);
+                ArrayList<String> gamesURLS = Controller.findShortestGames(Integer.parseInt(criteria.get(0)));
+                outStream.writeObject(gamesURLS);
             }
             else if(choice == Request.VIEW_THE_MOST_ACTIVE_PLAYERS) {
                 ArrayList<String> players = Controller.findTheNMostActivePlayers(Integer.parseInt(criteria.get(0)));
@@ -58,7 +58,7 @@ public class ClientRequestManager extends Thread {
         } catch (IOException ioe) {
 
         } catch (ClassNotFoundException cnfe) {
-            System.out.println("Unknown request format");
+            System.out.println("Format de requête non reconnu");
         }
     }
 }

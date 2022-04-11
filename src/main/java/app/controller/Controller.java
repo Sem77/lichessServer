@@ -3,7 +3,6 @@ package app.controller;
 import app.model.Game;
 import app.model.OccurrenceString;
 import app.model.Player;
-import app.model.Strokes;
 
 import java.io.*;
 import java.util.*;
@@ -126,17 +125,15 @@ public class Controller {
      * @param username nom d'utilisateur du joueur concerné
      * @return une arraylist des parties jouées
      */
-    public static ArrayList<Game> findAPlayerSGames(String username) {
+    public static ArrayList<String> findAPlayerSGames(String username) {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
         try {
             ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.A_PLAYER_GAME_ALL + "." + Constants.BINARY_EXTENSION));
             Hashtable<String, TreeSet<String>> hashtable = (Hashtable<String, TreeSet<String>>) o.readObject();
             o.close();
 
-            TreeSet<String> gameFilesPaths = hashtable.get(username);
-            if(gameFilesPaths == null)
-                return null;
-            return gamesOfAPlayer(gameFilesPaths, username);
+            TreeSet<String> gamesURLS = hashtable.get(username);
+            return new ArrayList<>(gamesURLS);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -153,28 +150,30 @@ public class Controller {
      *
      * @return
      * @throws IOException
+     * @param nbShortestGames
      */
-    public static ArrayList<Game> findShortestGames() throws IOException {
+    public static ArrayList<String> findShortestGames(Integer nbShortestGames) throws IOException {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
-        File shortestGamesPath = new File(gamesDataDirectory + File.separator + Constants.FIVE_SHORTEST_GAMES + "." + Constants.BINARY_EXTENSION); // list of the path of all hashtables
-
-        ArrayList<Game> games = new ArrayList<>();
+        File shortestGamesPath = new File(gamesDataDirectory + File.separator + Constants.ORDER_SHORTEST_GAMES + "." + Constants.BINARY_EXTENSION); // list of the path of all hashtables
+        ArrayList<String> gamesURLS = new ArrayList<>();
 
         ObjectInputStream o = new ObjectInputStream(new FileInputStream(shortestGamesPath));
 
-        Game game;
+        String gameURL;
+        int nbGamesFound = 0;
         try {
             do {
-                game = (Game) o.readObject();
-                games.add(game);
-            } while (game != null);
+                gameURL = (String) o.readObject();
+                gamesURLS.add(gameURL);
+                nbGamesFound++;
+            } while (gameURL != null && nbGamesFound < nbShortestGames);
         } catch(EOFException eofe) {}
         catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         o.close();
 
-        return games;
+        return gamesURLS;
     }
 
 
@@ -250,9 +249,8 @@ public class Controller {
     }
 
 
-    public static Strokes findAGameWithLink(String link) {
+    public static Game findAGameWithLink(String link) {
         File gameDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
-        Strokes strokes = null;
         try {
             ObjectInputStream o = new ObjectInputStream(new FileInputStream(gameDataDirectory + File.separator + Constants.GAME_LINK_ALL + "." + Constants.BINARY_EXTENSION));
             Hashtable<String, String> hashtable = (Hashtable<String, String>) o.readObject();
@@ -265,8 +263,8 @@ public class Controller {
             do {
                 game = (Game) gameFile.readObject();
                 if(game.getSite().equals(link))
-                    strokes = game.getStrokes();
-            } while(game != null && strokes == null);
+                    return game;
+            } while(game != null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -274,6 +272,6 @@ public class Controller {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return strokes;
+        return null;
     }
 }
