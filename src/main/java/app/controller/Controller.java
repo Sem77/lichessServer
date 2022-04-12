@@ -244,7 +244,6 @@ public class Controller {
         } catch(FileNotFoundException fnfe) {
             System.out.println("Hashtable not found");
         } catch(IOException ioe) {}
-
         return players;
     }
 

@@ -1,5 +1,6 @@
 package server;
 
+import app.controller.Constants;
 import app.controller.Controller;
 import app.model.Game;
 import app.model.Player;
@@ -14,14 +15,17 @@ public class ClientRequestManager extends Thread {
     private Socket connectionSocket;
     private ObjectInputStream inStream;
     private ObjectOutputStream outStream;
+    private Server server;
 
-    public ClientRequestManager(Socket connectionSocket) throws IOException {
+    public ClientRequestManager(Socket connectionSocket, Server server) throws IOException {
         this.connectionSocket = connectionSocket;
         inStream = new ObjectInputStream(connectionSocket.getInputStream());
         outStream = new ObjectOutputStream(connectionSocket.getOutputStream());
+        this.server = server;
     }
 
     public void run() {
+        server.connect();
         try {
             Request clientRequest = (Request) inStream.readObject();
 
@@ -60,5 +64,6 @@ public class ClientRequestManager extends Thread {
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Format de requête non reconnu");
         }
+        server.disconnect();
     }
 }
