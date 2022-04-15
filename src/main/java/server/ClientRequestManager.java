@@ -1,11 +1,9 @@
 package server;
 
-import app.controller.Constants;
 import app.controller.Controller;
 import app.model.Game;
 import app.model.Player;
 import app.model.Request;
-import app.model.Strokes;
 
 import java.io.*;
 import java.net.Socket;
@@ -33,7 +31,7 @@ public class ClientRequestManager extends Thread {
             ArrayList<String> criteria = clientRequest.getCriterias();
 
             if(choice == Request.VIEW_A_GAME) {
-                Game games = Controller.findAGameWithLink(criteria.get(0));
+                Game games = Controller.findAGameWithURL(criteria.get(0));
                 outStream.writeObject(games);
             }
             else if(choice == Request.VIEW_A_PLAYER_S_GAMES) {
@@ -52,8 +50,12 @@ public class ClientRequestManager extends Thread {
                 ArrayList<String> players = Controller.findTheNMostActivePlayers(Integer.parseInt(criteria.get(0)));
                 outStream.writeObject(players);
             }
-            else if(choice == Request.VIEW_THE_BEST_PLAYERS) {
-                ArrayList<Player> players = Controller.findTheNBestPlayers(Integer.parseInt(criteria.get(0)));
+            else if(choice == Request.VIEW_THE_BEST_PLAYERS_PR) {
+                ArrayList<Player> players = Controller.findTheNBestPlayersPR(Integer.parseInt(criteria.get(0)));
+                outStream.writeObject(players);
+            }
+            else if(choice == Request.VIEW_THE_BEST_PLAYERS_HITS) {
+                ArrayList<Player> players = Controller.findTheNBestPlayersHits(Integer.parseInt(criteria.get(0)));
                 outStream.writeObject(players);
             }
             inStream.close();

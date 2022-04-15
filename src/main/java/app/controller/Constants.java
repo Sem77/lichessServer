@@ -36,8 +36,8 @@ public class Constants {
     public static final String PLAYERS_INFO = "players_info_hashtable";
     public static final String PLAYERS_INFO_OVER_A_YEAR = "players_info_over_a_year";
     public static final String PLAYERS_INFO_ALL = "players_info_all";
-    public static final String ORDER_BEST_PLAYERS_ALL = "best_players_in_order_all";
-    public static final String ORDER_BEST_PLAYERS_OVER_A_YEAR = "best_players_in_order_over_a_year";
+    public static final String ORDER_BEST_PLAYERS_ALL_PAGE_RANK = "best_players_page_rank_in_order_all";
+    public static final String ORDER_BEST_PLAYERS_ALL_HITS = "best_players_hits_in_order_all";
 
     public static final int NUMBER_OF_GAMES_PER_FILE = 20;
     public static final String BINARY_EXTENSION = "dat";

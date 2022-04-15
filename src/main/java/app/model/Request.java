@@ -10,7 +10,8 @@ public class Request implements Serializable {
     public final static int VIEW_THE_5_MOST_PLAYED_OPENING = 3;
     public final static int VIEW_THE_SHORTEST_GAMES = 4;
     public final static int VIEW_THE_MOST_ACTIVE_PLAYERS = 5;
-    public final static int VIEW_THE_BEST_PLAYERS = 6;
+    public final static int VIEW_THE_BEST_PLAYERS_PR = 6;
+    public final static int VIEW_THE_BEST_PLAYERS_HITS = 7;
 
     private int requestNumber;
     private ArrayList<String> criterias;

@@ -225,11 +225,11 @@ public class Controller {
     }
 
 
-    public static ArrayList<Player> findTheNBestPlayers(Integer nbPlayers) {
+    public static ArrayList<Player> findTheNBestPlayersPR(Integer nbPlayers) {
         File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
         ArrayList<Player> players = new ArrayList<>();
         try {
-            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.ORDER_BEST_PLAYERS_ALL + "." + Constants.BINARY_EXTENSION));
+            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.ORDER_BEST_PLAYERS_ALL_PAGE_RANK + "." + Constants.BINARY_EXTENSION));
             Player player;
             try {
                 do {
@@ -248,20 +248,43 @@ public class Controller {
     }
 
 
-    public static Game findAGameWithLink(String link) {
+    public static ArrayList<Player> findTheNBestPlayersHits(Integer nbPlayers) {
+        File gamesDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            ObjectInputStream o = new ObjectInputStream(new FileInputStream(gamesDataDirectory + File.separator + Constants.ORDER_BEST_PLAYERS_ALL_HITS + "." + Constants.BINARY_EXTENSION));
+            Player player;
+            try {
+                do {
+                    player = (Player) o.readObject();
+                    players.add(player);
+                } while (player != null && players.size() < nbPlayers);
+            } catch(EOFException eofe) {}
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            o.close();
+        } catch(FileNotFoundException fnfe) {
+            System.out.println("Hashtable not found");
+        } catch(IOException ioe) {}
+        return players;
+    }
+
+
+    public static Game findAGameWithURL(String url) {
         File gameDataDirectory = new File(Constants.GAMES_DATA_DIRECTORY);
         try {
             ObjectInputStream o = new ObjectInputStream(new FileInputStream(gameDataDirectory + File.separator + Constants.GAME_LINK_ALL + "." + Constants.BINARY_EXTENSION));
             Hashtable<String, String> hashtable = (Hashtable<String, String>) o.readObject();
             o.close();
-            String gameLocation = hashtable.get(link);
+            String gameLocation = hashtable.get(url);
 
             ObjectInputStream gameFile = new ObjectInputStream(new FileInputStream(gameLocation));
 
             Game game;
             do {
                 game = (Game) gameFile.readObject();
-                if(game.getSite().equals(link))
+                if(game.getSite().equals(url))
                     return game;
             } while(game != null);
         } catch (FileNotFoundException e) {
